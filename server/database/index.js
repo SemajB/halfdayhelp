@@ -11,6 +11,9 @@ mongoose.connect(DB_URI, { useNewUrlParser: true })
 
 const repoSchema = new mongoose.Schema({
   // TODO: your schema here!
+  username: String,
+  repoUrl: String,
+  watchers: Number
 });
 
 const Repo = mongoose.model('Repo', repoSchema);
