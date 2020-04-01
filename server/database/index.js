@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const DB_URI = 'mongodb://localhost/fetcher';
 // TODO: Put the field you are gonna use to sort the repos by.
 // Your schema should have this field.
-const SORTING_BY_FIELD = '';
+const SORTING_BY_FIELD = 'watchers';
 
 mongoose.connect(DB_URI, { useNewUrlParser: true })
   .then(() => console.log('Connected to database'))
