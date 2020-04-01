@@ -25,13 +25,12 @@ class Search extends React.Component {
   }
 
   render() {
-    const { username } = this.state;
 
     return (
       <div>
         <h4>Add more repos!</h4>
-        Enter a github username: <input value={username} onChange={this.handleChange} />
-        <button onClick={this.handleClick} type="button">Add Repos</button>
+        Enter a github username: <input type='text' onChange={(text) => {this.handleChange(text)}} />
+        <button onClick={() => {this.handleClick()}} type="button">Add Repos</button>
       </div>
     );
   }
