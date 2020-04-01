@@ -18,9 +18,22 @@ const repoSchema = new mongoose.Schema({
 
 const Repo = mongoose.model('Repo', repoSchema);
 
-const saveRepo = () => {
+const saveRepo = (repo) => {
   // TODO: Your code here
   // This function should save a repo to the MongoDB
+  Repo.create({username: repo.owner.login, repoUrl: repo.url, watchers: repo.watchers}, (err, savedRepo) => {
+    if(err){
+      console.log(err);
+    }else{
+      Repo.findOne({repoUrl: repo.url}, (err, repos) => {
+        if(err){
+          console.log(err);
+        }else{
+          console.log(repos);
+        }
+      })
+    }
+  });
 };
 
 const getTop25Repos = () => {
