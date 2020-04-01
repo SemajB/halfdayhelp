@@ -20,6 +20,17 @@ class App extends React.Component {
   handleSearch(username) {
     console.log(`${username} was searched`);
     // TODO
+    axios.post('/api/repos',{
+      data: {
+        username: username
+      }
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log("You got this error:", error);
+    });
   }
 
   render() {
