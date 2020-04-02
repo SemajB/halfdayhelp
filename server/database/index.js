@@ -21,24 +21,41 @@ const Repo = mongoose.model('Repo', repoSchema);
 const saveRepo = (repo) => {
   // TODO: Your code here
   // This function should save a repo to the MongoDB
-  Repo.create({username: repo.owner.login, repoUrl: repo.url, watchers: repo.watchers}, (err, savedRepo) => {
-    if(err){
-      console.log(err);
-    }else{
-      Repo.findOne({repoUrl: repo.url}, (err, repos) => {
-        if(err){
-          console.log(err);
-        }else{
-          console.log(repos);
-        }
-      })
-    }
-  });
+  return new Promise((resolve, reject) => {
+    const {username, repoUrl, watchers} = repo;
+    const newRepo = new Repo({username, repoUrl, watchers});
+
+    Repo.find({watchers: watchers}, (err, repos) => {
+      if (err) {
+        reject(err);
+      } 
+      if (repos.length === 0) {
+        newRepo.save((err, repo) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          }
+          resolve(repo);
+        })
+      } else {
+        resolve(null);
+      }
+    })
+  })
 };
 
 const getTop25Repos = () => {
   // TODO: Your code here
   // This function should get the repos from mongo
+  return new Promise((resolve, reject) => {
+    Repo.find((err, repos) => {
+      if(err){
+        reject(err);
+      }else{
+        resolve(repos);
+      }
+    })
+  })
 };
 
 module.exports.SORTING_BY_FIELD = SORTING_BY_FIELD;
