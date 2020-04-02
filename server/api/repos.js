@@ -29,7 +29,7 @@ Repos.post('/', (req, res) => {
     repos.data.forEach(repo => {
       db.saveRepo(repo)
       .then(savedRepo => {
-        res.statusCode(201);
+        console.log(savedRepo);
       })
       .catch(err => {
         console.error(err);
