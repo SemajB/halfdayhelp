@@ -11,8 +11,8 @@ mongoose.connect(DB_URI, { useNewUrlParser: true })
 
 const repoSchema = new mongoose.Schema({
   // TODO: your schema here!
-  username: String,
-  repoUrl: String,
+  login: String,
+  url: String,
   watchers: Number
 });
 
@@ -22,20 +22,21 @@ const saveRepo = (repo) => {
   // TODO: Your code here
   // This function should save a repo to the MongoDB
   return new Promise((resolve, reject) => {
-    const {username, repoUrl, watchers} = repo;
-    const newRepo = new Repo({username, repoUrl, watchers});
+    const {owner, url, watchers} = repo;
+    const {login} = owner;
+    const newRepo = new Repo({login, url, watchers});
 
     Repo.find({watchers: watchers}, (err, repos) => {
       if (err) {
         reject(err);
       } 
-      if (repos.length === 0) {
-        newRepo.save((err, repo) => {
+      else if (repos.length === 0) {
+        newRepo.save((err, savedRepo) => {
           if (err) {
             console.error(err);
             reject(err);
           }
-          resolve(repo);
+          resolve(savedRepo);
         })
       } else {
         resolve(null);
