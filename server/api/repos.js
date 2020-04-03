@@ -26,9 +26,12 @@ Repos.post('/', (req, res) => {
   gitHelper.getReposByUsername(username)
   .then(repos => {
     repos.data.forEach(repo => {
+      // console.log(repo)
       db.saveRepo(repo)
       .then(savedRepo => {
-        res.sendStatus(201);
+        // console.log(savedRepo)
+        res.status(201);
+        res.send(savedRepo);
       })
       .catch(err => {
         console.error(err);
