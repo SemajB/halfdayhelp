@@ -6,7 +6,6 @@ const gitHelper = require('../helpers/github');
 Repos.get('/', (req, res) => {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  res.status(200);
   db.getTop25Repos()
   .then(repos => {
     res.status(200);
@@ -29,7 +28,7 @@ Repos.post('/', (req, res) => {
     repos.data.forEach(repo => {
       db.saveRepo(repo)
       .then(savedRepo => {
-        console.log(savedRepo);
+        res.sendStatus(201);
       })
       .catch(err => {
         console.error(err);
