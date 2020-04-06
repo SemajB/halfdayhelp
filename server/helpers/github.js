@@ -10,7 +10,7 @@ const getReposByUsername = (username) => {
   // The options object has been provided to help you out,
   // but you'll have to fill in the URL
   const options = {
-    url: `https://api.github.com/repos/${username}`,
+    url: `https://api.github.com/users/${username}/repos`,
     headers: {
       // https://developer.github.com/v3/#user-agent-required
       'User-Agent': 'request',
