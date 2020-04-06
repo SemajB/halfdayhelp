@@ -22,20 +22,22 @@ Repos.post('/', (req, res) => {
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
+  const arr = [];
   let username = req.body.username;
   gitHelper.getReposByUsername(username)
   .then(repos => {
     repos.data.forEach(repo => {
-      db.saveRepo(repo)
-      .then(savedRepo => {
-        res.status(201);
-        res.send(savedRepo);
-      })
-      .catch(err => {
-        console.error(err);
-        res.sendStatus(500);
-      })
+      arr.push(db.saveRepo(repo));
     })
+    Promise.allSettled(arr)
+    .then(value => {
+      console.log(value);
+    })
+    res.status(201);
+    res.end('Repos saved!');
+  })
+  .catch(err => {
+    console.error(err);
   })
 });
 
