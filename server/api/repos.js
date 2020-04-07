@@ -29,12 +29,14 @@ Repos.post('/', (req, res) => {
     repos.data.forEach(repo => {
       arr.push(db.saveRepo(repo));
     })
-    Promise.allSettled(arr)
+    Promise.all(arr)
     .then(value => {
-      console.log(value);
+      res.sendStatus(201);
     })
-    res.status(201);
-    res.end('Repos saved!');
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    })
   })
   .catch(err => {
     console.error(err);
