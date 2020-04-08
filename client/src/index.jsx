@@ -17,6 +17,9 @@ class App extends React.Component {
     this.getRepos = this.getRepos.bind(this);
   }
 
+  componentDidMount(){
+    this.getRepos();
+  }
 
   handleSearch(username) {
     console.log(`${username} was searched`);
@@ -33,7 +36,7 @@ class App extends React.Component {
       console.log("You got this error:", error);
     });
   }
-  
+
   getRepos() {
     axios.get('/api/repos')
     .then(values => {
