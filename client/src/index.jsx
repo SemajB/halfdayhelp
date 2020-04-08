@@ -14,6 +14,7 @@ class App extends React.Component {
     };
 
     this.handleSearch = this.handleSearch.bind(this);
+    this.getRepos = this.getRepos.bind(this);
   }
 
 
@@ -32,6 +33,18 @@ class App extends React.Component {
       console.log("You got this error:", error);
     });
   }
+  
+  getRepos() {
+    axios.get('/api/repos')
+    .then(values => {
+      this.setState({
+        repos: values.data
+      })
+    })
+    .catch(err => {
+      console.error(err);
+    })
+  }
 
   render() {
     const { repos } = this.state;
@@ -39,7 +52,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>Github Fetcher</h1>
-        <RepoList repos={repos} />
+        <RepoList repos={repos} topRepos={this.getRepos}/>
         <Search onSearch={this.handleSearch} />
       </div>
     );
