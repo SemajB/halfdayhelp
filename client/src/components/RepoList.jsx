@@ -5,6 +5,7 @@ const RepoList = props => (
   <div>
     <h4>Repo List Component</h4>
     Top {props.repos.length} repos by watchers.
+    {props.topRepos()}
   </div>
 );
 
