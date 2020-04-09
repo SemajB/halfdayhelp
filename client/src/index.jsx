@@ -20,7 +20,6 @@ class App extends React.Component {
   componentDidMount(){
     this.getRepos();
   }
-
   handleSearch(username) {
     console.log(`${username} was searched`);
     // TODO
@@ -31,6 +30,7 @@ class App extends React.Component {
     })
     .then((response) => {
       console.log(response);
+      this.getRepos();
     })
     .catch((error) => {
       console.log("You got this error:", error);
@@ -55,7 +55,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>Github Fetcher</h1>
-        <RepoList repos={repos} topRepos={this.getRepos}/>
+        <RepoList repos={repos}/>
         <Search onSearch={this.handleSearch} />
       </div>
     );
