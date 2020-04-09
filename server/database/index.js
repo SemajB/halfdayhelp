@@ -13,7 +13,7 @@ const repoSchema = new mongoose.Schema({
   // TODO: your schema here!
   name: String,
   login: String,
-  url: String,
+  html_url: String,
   watchers: Number
 });
 
@@ -23,9 +23,9 @@ const saveRepo = (repo) => {
   // TODO: Your code here
   // This function should save a repo to the MongoDB
   return new Promise((resolve, reject) => {
-    const {name, owner, url, watchers} = repo;
+    const {name, owner, html_url, watchers} = repo;
     const {login} = owner;
-    const newRepo = new Repo({name, login, url, watchers});
+    const newRepo = new Repo({name, login, html_url, watchers});
 
     Repo.find({watchers: watchers}, (err, repos) => {
       if (err) {
