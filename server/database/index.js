@@ -54,7 +54,16 @@ const getTop25Repos = () => {
       if(err){
         reject(err);
       }else{
-        resolve(repos);
+        repos.sort((a, b) => {
+          if(a.watchers < b.watchers){
+            return 1;
+          }else if (a.watchers > b.watchers){
+            return -1;
+          }else {
+            return 0;
+          }
+        })
+        resolve(repos.slice(0, 25));
       }
     })
   })
