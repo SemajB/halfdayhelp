@@ -23,7 +23,7 @@ Repos.post('/', (req, res) => {
   // and get the repo information from the github API, then
   // save the repo information in the database
   const arr = [];
-  let username = req.body.username;
+  let {username} = req.body.data;
   gitHelper.getReposByUsername(username)
   .then(repos => {
     repos.data.forEach(repo => {
