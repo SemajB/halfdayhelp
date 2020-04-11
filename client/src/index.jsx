@@ -14,12 +14,8 @@ class App extends React.Component {
     };
 
     this.handleSearch = this.handleSearch.bind(this);
-    this.getRepos = this.getRepos.bind(this);
   }
 
-  componentDidMount(){
-    this.getRepos();
-  }
   handleSearch(username) {
     console.log(`${username} was searched`);
     // TODO
@@ -30,23 +26,13 @@ class App extends React.Component {
     })
     .then((response) => {
       console.log(response);
-      this.getRepos();
+      this.setState({
+        repos: response.data
+      })
     })
     .catch((error) => {
       console.log("You got this error:", error);
     });
-  }
-
-  getRepos() {
-    axios.get('/api/repos')
-    .then(values => {
-      this.setState({
-        repos: values.data
-      })
-    })
-    .catch(err => {
-      console.error(err);
-    })
   }
 
   render() {
