@@ -46,11 +46,11 @@ const saveRepo = (repo) => {
   })
 };
 
-const getTop25Repos = () => {
+const getTop25Repos = (username) => {
   // TODO: Your code here
   // This function should get the repos from mongo
   return new Promise((resolve, reject) => {
-    Repo.find((err, repos) => {
+    Repo.find({login: username}, (err, repos) => {
       if(err){
         reject(err);
       }else{
