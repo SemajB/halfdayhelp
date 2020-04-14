@@ -6,7 +6,6 @@ const gitHelper = require('../helpers/github');
 Repos.get('/', (req, res) => {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  console.log(req)
   db.getTop25Repos()
   .then(repos => {
     res.status(200);
