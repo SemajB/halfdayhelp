@@ -27,7 +27,7 @@ const saveRepo = (repo) => {
     const {login} = owner;
     const newRepo = new Repo({name, login, html_url, watchers});
 
-    Repo.find({watchers: watchers}, (err, repos) => {
+    Repo.find({name: name}, (err, repos) => {
       if (err) {
         reject(err);
       } 
@@ -50,22 +50,41 @@ const getTop25Repos = (username) => {
   // TODO: Your code here
   // This function should get the repos from mongo
   return new Promise((resolve, reject) => {
-    Repo.find({login: username}, (err, repos) => {
-      if(err){
-        reject(err);
-      }else{
-        repos.sort((a, b) => {
-          if(a.watchers < b.watchers){
-            return 1;
-          }else if (a.watchers > b.watchers){
-            return -1;
-          }else {
-            return 0;
-          }
-        })
-        resolve(repos.slice(0, 25));
-      }
-    })
+    if(username){
+      Repo.find({login: username}, (err, repos) => {
+        if(err){
+          reject(err);
+        }else{
+          repos.sort((a, b) => {
+            if(a.watchers < b.watchers){
+              return 1;
+            }else if (a.watchers > b.watchers){
+              return -1;
+            }else {
+              return 0;
+            }
+          })
+          resolve(repos.slice(0, 25));
+        }
+      })
+    }else{
+      Repo.find((err, repos) => {
+        if(err){
+          reject(err);
+        }else{
+          repos.sort((a, b) => {
+            if(a.watchers < b.watchers){
+              return 1;
+            }else if (a.watchers > b.watchers){
+              return -1;
+            }else {
+              return 0;
+            }
+          })
+          resolve(repos.slice(0, 25));
+        }
+      })
+    }
   })
 };
 
